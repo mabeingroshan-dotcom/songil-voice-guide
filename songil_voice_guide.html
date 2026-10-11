@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SONGIL 손길 – Voice Guide (demo)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+:root{--bg:#F4EEE4;--card:#FFFFFF;--ink:#2E2A26;--muted:#8A8278;--bronze:#A07A4A;--kraft:#C9A97E;--kraftd:#B8956A;--sand:#D9C3A5;--line:#E6DFD3;--accent:#B5533C;--ok:#7E906F;--tray:#E7D6B9;--sticker:#F4EEE4;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1D1915;--card:#2A2520;--ink:#F2EBDD;--muted:#B3A998;--bronze:#D2A86E;--kraft:#9C7F55;--kraftd:#85694A;--sand:#5C4C38;--line:#3A332B;--accent:#E08A72;--ok:#9DB08C;--tray:#4A3E2E;--sticker:#3A332B}}
+:root[data-theme="dark"]{--bg:#1D1915;--card:#2A2520;--ink:#F2EBDD;--muted:#B3A998;--bronze:#D2A86E;--kraft:#9C7F55;--kraftd:#85694A;--sand:#5C4C38;--line:#3A332B;--accent:#E08A72;--ok:#9DB08C;--tray:#4A3E2E;--sticker:#3A332B}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.5;min-height:100vh}
+body.voiceonly{--bg:#14110E;--card:#201B16;--ink:#FFF7E8;--muted:#CFC4B0;--bronze:#E3B97A;--line:#3A332B}
+.app{max-width:520px;margin:0 auto;padding:14px 16px 28px}
+.serif{font-family:'Noto Serif KR','Batang',Georgia,serif}
+.top{text-align:center;padding:6px 0 4px}
+.brand{display:flex;align-items:baseline;justify-content:center;gap:10px}
+.brand-name{font-family:'Noto Serif KR',Georgia,serif;font-weight:700;font-size:34px;letter-spacing:.14em;color:var(--bronze)}
+.brand-ko{font-family:'Noto Serif KR',Georgia,serif;font-weight:700;font-size:22px}
+.slogan{margin:2px 0 12px;font-size:12.5px;color:var(--muted)}
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1.5px solid var(--bronze);border-radius:999px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;font-weight:500;padding:8px 14px;min-height:40px;cursor:pointer}
+.seg button.on{background:var(--bronze);color:#fff;font-weight:700}
+.hero{text-align:center;margin-top:8px}
+.hero svg{width:100%;max-width:400px;height:auto;display:block;margin:0 auto}
+.hero h1{font-family:'Noto Serif KR',Georgia,serif;font-size:23px;line-height:1.35;margin:6px 0 6px}
+.hero p.sub{margin:0 auto 14px;max-width:360px;color:var(--muted);font-size:14px}
+.play{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;background:var(--bronze);color:#fff;font:inherit;font-size:18px;font-weight:700;padding:16px 34px;min-height:58px;cursor:pointer;box-shadow:0 8px 22px rgba(160,122,74,.35);animation:beat 2.2s ease-in-out infinite}
+.play:active{transform:scale(.97)}
+.link{display:block;margin:12px auto 0;background:transparent;border:0;color:var(--bronze);font:inherit;font-size:14px;font-weight:700;text-decoration:underline;padding:10px;min-height:44px;cursor:pointer}
+.how{display:flex;justify-content:center;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
+.how span{font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.demo{margin:16px auto 0;max-width:420px;padding:10px 14px;border:1px dashed var(--bronze);border-radius:14px;font-size:12.5px;color:var(--muted);background:var(--card)}
+.demo b{color:var(--accent)}
+.stage{margin-top:8px}
+.stage[hidden]{display:none}
+.stage.show{animation:rise .6s ease both}
+.tray{display:grid;gap:6px;background:var(--tray);border:3px solid var(--kraftd);border-radius:18px;padding:8px}
+.zone{background:rgba(255,255,255,.35);border-radius:12px;padding:6px 3px 8px;text-align:center;transition:opacity .4s,transform .35s,box-shadow .35s,background .35s;cursor:pointer;border:2px solid transparent;min-width:0}
+.zone{opacity:.55}
+.stage.show .zone{animation:zin .5s ease backwards;animation-delay:calc(var(--z)*110ms)}
+.zone.done{opacity:.85}
+.zone.active{opacity:1!important;transform:translateY(-5px)!important;background:var(--card);border-color:var(--bronze);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.stage.show .zone.active{animation:pulse 1.6s ease-out infinite;animation-delay:0s}
+.zone .n{display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--bronze);color:#fff;font-size:11px;font-weight:700;align-items:center;justify-content:center}
+.zone .zl{font-size:11px;font-weight:700;margin:3px 0 5px;line-height:1.2;word-break:keep-all}
+.mini{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:4px 2px;margin-top:4px;font-size:9.5px;line-height:1.15;word-break:keep-all}
+.mini svg{width:22px;height:22px}
+.mini em{font-style:normal;color:var(--muted);font-size:9px}
+.detail{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 12px 6px}
+.dh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.dh .n{width:28px;height:28px;border-radius:50%;background:var(--bronze);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.dh h2{font-family:'Noto Serif KR',Georgia,serif;font-size:19px;margin:0}
+.dh small{display:block;color:var(--muted);font-size:12px}
+.row{display:flex;align-items:center;gap:12px;padding:9px 6px;border-top:1px solid var(--line);border-radius:12px;cursor:pointer;transition:background .3s,transform .3s}
+.row.active{background:rgba(160,122,74,.16);transform:scale(1.02)}
+.sticker{flex:none;width:56px;height:56px;border-radius:50%;background:var(--sticker);border:2px solid var(--bronze);display:flex;align-items:center;justify-content:center;position:relative}
+.row.active .sticker::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--bronze);animation:ripple 1.2s ease-out infinite}
+.sticker svg{width:40px;height:40px;overflow:visible}
+.rt{flex:1;min-width:0}
+.rt b{font-size:16px;display:block}
+.rt span{font-size:12.5px;color:var(--muted);display:block}
+.rt i{font-style:normal;font-size:12.5px;color:var(--bronze);font-weight:700}
+.qty{flex:none;font-weight:700;font-size:15px;color:var(--bronze);background:var(--sticker);border:1px solid var(--bronze);border-radius:999px;padding:3px 11px}
+.s{transform-box:fill-box;transform-origin:center}
+.row.active .s,.sticker.hit .s{animation:pop .55s cubic-bezier(.2,1.4,.4,1) both;animation-delay:calc(var(--i)*80ms)}
+.row.active .wv,.sticker.hit .wv{animation:dash 1s ease both}
+.caption{margin-top:14px;min-height:92px;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--bronze);border-radius:14px;padding:12px 14px;position:relative}
+.caption .main{font-size:20px;font-weight:700;line-height:1.35}
+.caption .alt{font-size:13px;color:var(--muted);margin-top:4px}
+.caption .main.fade{animation:fade .45s ease both}
+.eq{position:absolute;right:12px;top:12px;display:flex;gap:3px;align-items:flex-end;height:20px}
+.eq i{width:4px;height:20%;background:var(--bronze);border-radius:2px}
+.speaking .eq i{animation:eq .8s ease-in-out infinite}
+.speaking .eq i:nth-child(2){animation-delay:.15s}.speaking .eq i:nth-child(3){animation-delay:.3s}.speaking .eq i:nth-child(4){animation-delay:.45s}
+.controls{display:flex;gap:10px;justify-content:center;align-items:center;margin-top:12px}
+.btn{border:1.5px solid var(--bronze);background:var(--card);color:var(--ink);border-radius:999px;font:inherit;font-weight:700;min-width:52px;min-height:52px;padding:0 16px;font-size:18px;cursor:pointer}
+.btn.main{background:var(--bronze);color:#fff;min-width:130px;font-size:16px}
+.btn:active{transform:scale(.96)}
+.progress{height:6px;background:var(--line);border-radius:6px;margin-top:12px;overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:var(--bronze);transition:width .5s}
+.note{margin-top:10px;font-size:12.5px;color:var(--accent);text-align:center}
+.foot{margin-top:22px;text-align:center;font-size:12px;color:var(--muted)}
+.foot b{color:var(--bronze)}
+.voiceonly .tray,.voiceonly .detail,.voiceonly .hero svg,.voiceonly .how{display:none}
+.voiceonly .caption .main{font-size:30px}.voiceonly .caption .alt{font-size:18px}
+.voiceonly .btn{min-height:68px;min-width:68px;font-size:24px}.voiceonly .btn.main{min-width:170px}
+.voiceonly .play{font-size:24px;padding:22px 40px}
+.box .lid{transition:transform 1s cubic-bezier(.5,0,.2,1),opacity .8s;transform-box:fill-box;transform-origin:left bottom}
+.box.open .lid{transform:translateY(-72px) rotate(-7deg);opacity:0}
+.whale{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 3.2s ease .4s forwards}
+.tag{transform-box:fill-box;transform-origin:50% 0;animation:swing 3.4s ease-in-out infinite}
+.sp{animation:twinkle 2.4s ease-in-out infinite}.sp:nth-of-type(2){animation-delay:.6s}.sp:nth-of-type(3){animation-delay:1.2s}.sp:nth-of-type(4){animation-delay:1.8s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes zin{from{opacity:0;transform:translateY(16px)}to{opacity:.55;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(160,122,74,.5)}100%{box-shadow:0 0 0 14px rgba(160,122,74,0)}}
+@keyframes ripple{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+@keyframes pop{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes dash{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes eq{0%,100%{height:20%}50%{height:100%}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}.whale{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand"><span class="brand-name">SONGIL</span><span class="brand-ko">손길</span></div>
+    <p class="slogan">Luxury You Can Feel · 손끝으로 느끼는 고급스러움</p>
+    <div class="chips">
+      <div class="seg" role="group" aria-label="Kit"><button type="button" data-kit="duo" class="on">DUO 2인</button><button type="button" data-kit="solo">SOLO 1인</button></div>
+      <div class="seg" role="group" aria-label="Language"><button type="button" data-lang="ko" class="on">한국어</button><button type="button" data-lang="en">English</button></div>
+    </div>
+  </header>
+
+  <section class="hero" id="hero">
+    <svg id="boxsvg" class="box" viewBox="0 0 360 232" role="img" aria-label="SONGIL gift box">
+      <defs><clipPath id="tagclip"><circle cx="0" cy="0" r="25"/></clipPath></defs>
+      <ellipse cx="180" cy="214" rx="130" ry="9" fill="#000" opacity=".12"/>
+      <g id="base">
+        <rect x="58" y="128" width="244" height="82" rx="5" fill="#B8956A"/>
+        <rect x="58" y="128" width="244" height="12" fill="#A58157"/>
+        <rect x="171" y="128" width="18" height="82" fill="#8B6C46" opacity=".55"/>
+      </g>
+      <g class="lid">
+        <rect x="48" y="86" width="264" height="46" rx="6" fill="#C9A97E"/>
+        <rect x="48" y="86" width="264" height="10" rx="5" fill="#D8BC93"/>
+        <rect x="171" y="86" width="18" height="46" fill="#8B6C46" opacity=".5"/>
+        <g transform="translate(66,92) scale(.52)">
+          <path class="whale" pathLength="1" d="M12,58 C20,34 58,22 98,28 C132,33 156,48 174,40 C183,36 188,28 192,18 C193,30 191,42 184,52 C175,66 156,74 134,76 C104,80 66,86 38,78 C24,74 14,68 12,58 Z" fill="none" stroke="#7A5A34" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="whale" pathLength="1" d="M80,70 C74,82 66,90 56,92 C70,90 84,82 92,70 M40,68 C70,74 110,72 140,64 M46,62 C76,68 112,66 142,58" fill="none" stroke="#7A5A34" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="36" cy="55" r="2.6" fill="#7A5A34"/>
+        </g>
+        <g class="bow"><path d="M180 86 C160 66 150 82 172 90 M180 86 C200 66 210 82 188 90" fill="none" stroke="#7B5E3A" stroke-width="4" stroke-linecap="round"/><circle cx="180" cy="88" r="5" fill="#7B5E3A"/></g>
+        <g class="tag" transform="translate(222,128)"><path d="M-30,-40 C-18,-30 -8,-26 0,-24" fill="none" stroke="#7B5E3A" stroke-width="2.5"/><circle cx="0" cy="0" r="27" fill="#F4EEE4" stroke="#A07A4A" stroke-width="2"/><g clip-path="url(#tagclip)"><image href="data:image/jpeg;base64,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" x="-25" y="-25" width="50" height="50"/></g></g>
+      </g>
+      <g fill="#A07A4A"><path class="sp" d="M300 60 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z"/><path class="sp" d="M52 70 l2 6 6 2 -6 2 -2 6 -2 -6 -6 -2 6 -2z"/><path class="sp" d="M322 130 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><path class="sp" d="M34 140 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/></g>
+    </svg>
+    <h1 id="heroTitle"></h1>
+    <p class="sub" id="heroSub"></p>
+    <button type="button" class="play" id="playBtn"></button>
+    <button type="button" class="link" id="voiceOnlyBtn"></button>
+    <div class="how" id="how"></div>
+    <div class="demo" id="demoNote"></div>
+  </section>
+
+  <section class="stage" id="stage" hidden>
+    <div class="tray" id="tray"></div>
+    <div class="detail" id="detail"></div>
+    <div class="caption" id="captionBox"><div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="main" id="capMain" aria-live="polite"></div><div class="alt" id="capAlt"></div></div>
+    <div class="controls">
+      <button type="button" class="btn" id="prevBtn" aria-label="Previous">⏮</button>
+      <button type="button" class="btn main" id="toggleBtn"></button>
+      <button type="button" class="btn" id="nextBtn" aria-label="Next">⏭</button>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="note" id="note" hidden></div>
+    <button type="button" class="link" id="closeBtn"></button>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+<script>
+(function(){
+"use strict";
+var UI={
+ ko:{title:"상자 속을 목소리로 안내해 드려요",sub:"버튼을 누르면 상자 안에 무엇이 들어 있는지 차례로 들려드려요.",play:"▶ 눌러서 듣기",voiceOnly:"눈 감고 듣기 모드",stop:"■ 멈춤",replay:"↺ 다시 듣기",close:"상자 닫기",how:["① QR 스캔","② 버튼 누르기","③ 듣기"],demo:"<b>데모 버전</b> – 지금 목소리는 휴대폰 기본 음성이에요. 팀이 직접 녹음한 목소리는 이번 주에 넣을 예정이에요.",foot:"<b>SONGIL 손길</b> · Team A Plus · 울산과학대학교<br>점자 스티커와 직접 녹음한 음성 안내가 이번 주 추가돼요.",nosound:"소리가 안 나면 음량을 올리고 무음 모드를 꺼 주세요. 자막으로도 볼 수 있어요.",nospeech:"이 휴대폰은 음성 읽기를 지원하지 않아요. 자막으로 안내해 드려요.",tapHint:"칸이나 제품을 누르면 그 설명만 들려줘요.",kitDuo:"DUO 2인 세트",kitSolo:"SOLO 1인 키트"},
+ en:{title:"Let your ears tour the box",sub:"Press the button and hear, one by one, what is inside.",play:"▶ Tap to listen",voiceOnly:"Eyes-closed mode",stop:"■ Stop",replay:"↺ Listen again",close:"Close the box",how:["① Scan the QR","② Press play","③ Listen"],demo:"<b>Demo version</b> – the voice you hear is your phone’s built-in voice. Our own recorded voice will be added this week.",foot:"<b>SONGIL 손길</b> · Team A Plus · Ulsan College<br>Braille labels and our recorded voice guide arrive this week.",nosound:"No sound? Turn the volume up and switch silent mode off. You can also read the captions.",nospeech:"This phone cannot read the page aloud, so captions guide you.",tapHint:"Tap a section or an item to hear just that part.",kitDuo:"DUO 2-person set",kitSolo:"SOLO 1-person kit"}
+};
+var ITEMS={
+ shampoo:{ko:"샴푸",en:"Shampoo",sym:"lines",symKo:"세로 선 네 개",symEn:"four raised lines",tKo:"샴푸는 세로 선 네 개예요.",tEn:"Shampoo has four raised lines."},
+ conditioner:{ko:"린스",en:"Conditioner",sym:"dots",symKo:"점 두 줄",symEn:"two rows of dots",tKo:"린스는 점 두 줄이에요.",tEn:"Conditioner has two rows of dots."},
+ bodywash:{ko:"바디워시",en:"Body wash",sym:"wave",symKo:"물결 하나",symEn:"one wave",tKo:"바디워시는 물결 하나예요.",tEn:"Body wash has one wave."},
+ soap:{ko:"비누",en:"Soap",sym:"round",symKo:"동그란 모양",symEn:"round shape",tKo:"비누는 동그란 모양이에요.",tEn:"The soap is round."},
+ towel:{ko:"샤워타올",en:"Shower towel",sym:"pouch",symKo:"작은 파우치",symEn:"small pouch",tKo:"샤워타올도 있어요.",tEn:"And a shower towel."},
+ toner:{ko:"토너",en:"Toner",sym:"ring1",symKo:"동그라미 하나",symEn:"one ring",tKo:"토너는 동그라미 하나예요.",tEn:"Toner has one ring."},
+ essence:{ko:"에센스",en:"Essence",sym:"ring2",symKo:"동그라미 둘",symEn:"two rings",tKo:"에센스는 동그라미 둘이에요.",tEn:"Essence has two rings."},
+ foam:{ko:"폼클렌징",en:"Foam cleansing",sym:"ring3",symKo:"동그라미 셋",symEn:"three rings",tKo:"폼클렌징은 동그라미 셋이에요.",tEn:"Foam cleansing has three rings."},
+ toothbrush:{ko:"칫솔·치약 세트",en:"Toothbrush & toothpaste",sym:"long",symKo:"길쭉한 포장",symEn:"long pack",tKo:"칫솔과 치약 세트예요.",tEn:"A toothbrush and toothpaste set."},
+ comb:{ko:"빗",en:"Comb",sym:"comb",symKo:"납작하고 긴 포장",symEn:"flat, long pack",tKo:"빗이에요.",tEn:"And a comb."},
+ care:{ko:"레이디 세트",en:"Lady care kit",sym:"pouch",symKo:"작은 파우치",symEn:"small pouch",tKo:"레이디 세트예요.",tEn:"A lady care kit."}
+};
+var ORD={ko:["첫째","둘째","셋째","넷째","다섯째"],en:["First","Second","Third","Fourth","Fifth"]};
+var KITS={
+ duo:{n:5,zones:[
+  {k:"hair",ko:"머리",en:"Hair",items:["shampoo","conditioner"],q:2},
+  {k:"body",ko:"몸",en:"Body",items:["bodywash","soap","towel"],q:2},
+  {k:"face",ko:"얼굴",en:"Face",items:["toner","essence","foam"],q:1},
+  {k:"teeth",ko:"치아와 빗",en:"Teeth & comb",items:["toothbrush","comb"],q:2},
+  {k:"care",ko:"레이디 세트",en:"Care kit",items:["care"],q:1}]},
+ solo:{n:4,zones:[
+  {k:"hair",ko:"머리",en:"Hair",items:["shampoo","conditioner"],q:1},
+  {k:"body",ko:"몸",en:"Body",items:["bodywash","soap","towel"],q:1},
+  {k:"face",ko:"얼굴",en:"Face",items:["toner","essence","foam"],q:1},
+  {k:"tc",ko:"치아·빗·관리",en:"Teeth & care",items:["toothbrush","comb","care"],q:1}]}
+};
+var state={kit:"duo",lang:"ko",steps:[],cur:-1,playing:false,run:0,timers:[],started:false,voices:[],voiceOnly:false,zone:0};
+var $=function(id){return document.getElementById(id)};
+var hasTTS=("speechSynthesis" in window)&&("SpeechSynthesisUtterance" in window);
+
+/* ---------- symbols ---------- */
+function symSVG(t){
+ var s='<svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#A07A4A" stroke-width="3" stroke-linecap="round">',i;
+ if(t==="lines"){for(i=0;i<4;i++)s+='<line class="s" style="--i:'+i+'" x1="'+(9+i*7.4)+'" y1="8" x2="'+(9+i*7.4)+'" y2="32"/>';}
+ else if(t==="dots"){var n=0,r,c;for(r=0;r<2;r++)for(c=0;c<4;c++){s+='<circle class="s" style="--i:'+(n++)+'" cx="'+(9+c*7.4)+'" cy="'+(14+r*12)+'" r="2.7" fill="#A07A4A" stroke="none"/>';}}
+ else if(t==="wave"){s+='<path class="wv" pathLength="1" style="stroke-dasharray:1" d="M5 20 C10 8 15 8 20 20 S30 32 35 20"/>';}
+ else if(t==="ring1"){s+='<circle class="s" style="--i:0" cx="20" cy="20" r="9"/>';}
+ else if(t==="ring2"){s+='<circle class="s" style="--i:0" cx="12" cy="20" r="7"/><circle class="s" style="--i:1" cx="28" cy="20" r="7"/>';}
+ else if(t==="ring3"){s+='<circle class="s" style="--i:0" cx="8" cy="20" r="5.2"/><circle class="s" style="--i:1" cx="20" cy="20" r="5.2"/><circle class="s" style="--i:2" cx="32" cy="20" r="5.2"/>';}
+ else if(t==="round"){s+='<circle class="s" style="--i:0" cx="20" cy="20" r="11" fill="#D9C3A5"/><circle class="s" style="--i:1" cx="20" cy="20" r="5" stroke-width="2"/>';}
+ else if(t==="long"){s+='<rect class="s" style="--i:0" x="6" y="15" width="28" height="10" rx="4" fill="#D9C3A5"/>';}
+ else if(t==="comb"){s+='<rect class="s" style="--i:0" x="6" y="13" width="28" height="7" rx="2" fill="#D9C3A5"/>';for(i=0;i<5;i++)s+='<line class="s" style="--i:'+(i+1)+'" x1="'+(9+i*5.5)+'" y1="21" x2="'+(9+i*5.5)+'" y2="29" stroke-width="2.2"/>';}
+ else {s+='<rect class="s" style="--i:0" x="9" y="9" width="22" height="22" rx="5" fill="#D9C3A5"/><line class="s" style="--i:1" x1="9" y1="15" x2="31" y2="15" stroke-width="2"/>';}
+ return s+'</svg>';
+}
+function qtyKo(q){return q===1?"한 개":"두 개";}
+function qtyEn(q){return q===1?"one":"two";}
+
+/* ---------- steps ---------- */
+function buildSteps(){
+ var k=KITS[state.kit],st=[],zi,ii,z,it;
+ st.push({z:-1,it:-1,ko:"안녕하세요, 손길입니다. "+(state.kit==="duo"?"이 상자는 왼쪽에서 오른쪽으로 다섯 칸이에요.":"이 키트는 네 칸이에요."),en:"Hello, this is SONGIL. "+(state.kit==="duo"?"Your box has five sections, from left to right.":"Your kit has four sections.")});
+ for(zi=0;zi<k.zones.length;zi++){
+  z=k.zones[zi];
+  if(z.items.length===1){
+   st.push({z:zi,it:0,ko:ORD.ko[zi]+" 칸에는 "+ITEMS[z.items[0]].ko+"가 "+qtyKo(z.q)+" 들어 있어요.",en:ORD.en[zi]+", "+qtyEn(z.q)+" "+ITEMS[z.items[0]].en.toLowerCase()+"."});
+   continue;
+  }
+  var zko={hair:"머리예요.",body:"몸이에요.",face:"얼굴이에요.",teeth:"치아와 빗이에요.",tc:"치아와 관리예요."}[z.k];
+  var zen={hair:"hair.",body:"body.",face:"face.",teeth:"teeth and comb.",tc:"teeth and care."}[z.k];
+  st.push({z:zi,it:-1,ko:ORD.ko[zi]+" 칸은 "+zko,en:ORD.en[zi]+", "+zen});
+  for(ii=0;ii<z.items.length;ii++){it=ITEMS[z.items[ii]];st.push({z:zi,it:ii,ko:it.tKo,en:it.tEn});}
+  st.push({z:zi,it:-1,ko:(z.k==="teeth"||z.k==="tc"?"모두 ":"각각 ")+qtyKo(z.q)+"씩"+(z.k==="teeth"||z.k==="tc"?"이에요.":" 들어 있어요."),en:(qtyEn(z.q)==="one"?"One of each.":"Two of each.")});
+ }
+ st.push({z:-2,it:-1,ko:"모든 제품에는 점자 스티커도 붙어 있어요. 편안한 여행 되세요.",en:"Every item also has a braille label. Have a lovely trip."});
+ state.steps=st;
+}
+
+/* ---------- rendering ---------- */
+function t(key){return UI[state.lang][key];}
+function renderStatic(){
+ var u=UI[state.lang];
+ document.documentElement.lang=state.lang;
+ $("heroTitle").textContent=u.title;$("heroSub").textContent=u.sub;
+ $("playBtn").textContent=u.play;$("voiceOnlyBtn").textContent=state.voiceOnly?(state.lang==="ko"?"보통 모드로":"Normal mode"):u.voiceOnly;
+ $("how").innerHTML=u.how.map(function(x){return "<span>"+x+"</span>"}).join("");
+ $("demoNote").innerHTML=u.demo;$("foot").innerHTML=u.foot;$("closeBtn").textContent=u.close;
+ $("toggleBtn").textContent=state.playing?u.stop:(state.cur>=state.steps.length-1&&state.cur>=0?u.replay:u.play);
+ $("prevBtn").setAttribute("aria-label",state.lang==="ko"?"이전 칸":"Previous section");$("nextBtn").setAttribute("aria-label",state.lang==="ko"?"다음 칸":"Next section");
+}
+function renderTray(){
+ var k=KITS[state.kit],h="";
+ $("tray").style.gridTemplateColumns="repeat("+k.zones.length+",minmax(0,1fr))";
+ k.zones.forEach(function(z,i){
+  h+='<div class="zone" data-z="'+i+'" style="--z:'+i+'" role="button" tabindex="0" aria-label="'+z.ko+' '+z.en+'"><span class="n">'+(i+1)+'</span><div class="zl">'+(state.lang==="ko"?z.ko:z.en)+'</div>';
+  z.items.forEach(function(key){var it=ITEMS[key];h+='<div class="mini">'+symSVG(it.sym)+'<span>'+(state.lang==="ko"?it.ko:it.en)+'</span><em>×'+z.q+'</em></div>';});
+  h+='</div>';
+ });
+ $("tray").innerHTML=h;
+}
+function renderDetail(zi,active){
+ var k=KITS[state.kit],z=k.zones[zi],h="";
+ if(!z){$("detail").innerHTML='<div class="dh"><div class="n">♪</div><div><h2>'+(state.lang==="ko"?"손길 음성 안내":"SONGIL voice guide")+'</h2><small>'+t("tapHint")+'</small></div></div>';return;}
+ h+='<div class="dh"><div class="n">'+(zi+1)+'</div><div><h2>'+z.ko+'</h2><small>'+z.en+'</small></div></div>';
+ z.items.forEach(function(key,i){
+  var it=ITEMS[key];
+  h+='<div class="row'+(i===active?' active':'')+'" data-it="'+i+'" role="button" tabindex="0"><div class="sticker">'+symSVG(it.sym)+'</div><div class="rt"><b>'+it.ko+'</b><span>'+it.en+'</span><i>'+(state.lang==="ko"?it.symKo:it.symEn)+'</i></div><div class="qty">×'+z.q+'</div></div>';
+ });
+ $("detail").innerHTML=h;
+}
+function setZoneClasses(zi){
+ var els=document.querySelectorAll(".zone");
+ Array.prototype.forEach.call(els,function(el,i){el.classList.toggle("active",i===zi);el.classList.toggle("done",zi>=0&&i<zi);});
+}
+function caption(ko,en){
+ var main=$("capMain"),alt=$("capAlt");
+ var a=state.lang==="ko"?ko:en,b=state.lang==="ko"?en:ko;
+ main.classList.remove("fade");void main.offsetWidth;main.textContent=a;main.classList.add("fade");alt.textContent=b;
+}
+function showStep(i){
+ var s=state.steps[i];if(!s)return;
+ state.cur=i;
+ var zi=s.z>=0?s.z:-1;
+ if(zi>=0){state.zone=zi;renderDetail(zi,s.it>=0?s.it:-1);}
+ else if(s.z===-1){renderDetail(-1,-1);}
+ setZoneClasses(s.z===-2?KITS[state.kit].zones.length:zi);
+ caption(s.ko,s.en);
+ $("bar").style.width=Math.round((i+1)/state.steps.length*100)+"%";
+ $("toggleBtn").textContent=state.playing?t("stop"):((i>=state.steps.length-1)?t("replay"):t("play"));
+}
+
+/* ---------- speech ---------- */
+function loadVoices(){if(hasTTS){try{state.voices=window.speechSynthesis.getVoices()||[];}catch(e){state.voices=[];}}}
+function pickVoice(lang){
+ var p=lang==="ko"?"ko":"en",list=state.voices.filter(function(v){return (v.lang||"").toLowerCase().replace("_","-").indexOf(p)===0;});
+ if(!list.length)return null;
+ var pref=lang==="ko"?/ko-kr/i:/en-(us|gb|au)/i;
+ return list.filter(function(v){return pref.test(v.lang||"");})[0]||list[0];
+}
+function clearTimers(){state.timers.forEach(function(x){clearTimeout(x)});state.timers=[];}
+function stopAll(){state.run++;clearTimers();if(hasTTS){try{window.speechSynthesis.cancel();}catch(e){}}state.playing=false;$("captionBox").classList.remove("speaking");$("toggleBtn").textContent=(state.cur>=state.steps.length-1&&state.cur>=0)?t("replay"):t("play");}
+function finish(run){if(run!==state.run)return;state.playing=false;$("captionBox").classList.remove("speaking");setZoneClasses(KITS[state.kit].zones.length);$("toggleBtn").textContent=t("replay");}
+function note(msg){var n=$("note");if(msg){n.textContent=msg;n.hidden=false;}else{n.hidden=true;}}
+function playFrom(i){
+ stopAll();
+ var run=state.run;state.playing=true;state.started=false;$("toggleBtn").textContent=t("stop");note("");
+ if(!hasTTS){note(t("nospeech"));timerPlay(i,run);return;}
+ var v=pickVoice(state.lang),lang=state.lang==="ko"?"ko-KR":"en-US",j;
+ for(j=i;j<state.steps.length;j++){(function(idx){
+  var u=new window.SpeechSynthesisUtterance(state.lang==="ko"?state.steps[idx].ko:state.steps[idx].en);
+  u.lang=lang;if(v)u.voice=v;u.rate=state.lang==="ko"?0.95:0.92;u.pitch=1;
+  u.onstart=function(){if(run!==state.run)return;state.started=true;$("captionBox").classList.add("speaking");showStep(idx);};
+  u.onend=function(){if(run!==state.run)return;if(idx===state.steps.length-1)finish(run);};
+  u.onerror=function(){};
+  window.speechSynthesis.speak(u);
+ })(j);}
+ showStep(i);
+ state.timers.push(setTimeout(function(){
+  if(run!==state.run||state.started||!state.playing)return;
+  try{window.speechSynthesis.cancel();}catch(e){}
+  note(t("nospeech"));timerPlay(i,run);
+ },2800));
+ }
+function timerPlay(i,run){
+ if(run!==state.run)return;
+ if(i>=state.steps.length){finish(run);return;}
+ showStep(i);$("captionBox").classList.add("speaking");
+ var s=state.steps[i],txt=state.lang==="ko"?s.ko:s.en,ms=Math.max(2300,txt.length*(state.lang==="ko"?170:80));
+ state.timers.push(setTimeout(function(){timerPlay(i+1,run);},ms));
+}
+function speakOne(text,lang){
+ stopAll();if(!hasTTS)return;
+ var u=new window.SpeechSynthesisUtterance(text),v=pickVoice(lang);u.lang=lang==="ko"?"ko-KR":"en-US";if(v)u.voice=v;u.rate=0.95;
+ u.onstart=function(){$("captionBox").classList.add("speaking");};u.onend=function(){$("captionBox").classList.remove("speaking");};
+ window.speechSynthesis.speak(u);
+}
+function firstStepOfZone(zi){for(var i=0;i<state.steps.length;i++){if(state.steps[i].z===zi)return i;}return 0;}
+function jumpZone(dir){
+ var k=KITS[state.kit],cur=state.steps[Math.max(state.cur,0)],zi=cur?cur.z:-1,target;
+ if(cur&&cur.z===-2)zi=k.zones.length;
+ target=Math.min(Math.max(zi+dir,-1),k.zones.length);
+ var idx=target<0?0:(target>=k.zones.length?state.steps.length-1:firstStepOfZone(target));
+ if(state.playing)playFrom(idx);else showStep(idx);
+}
+
+/* ---------- open / close ---------- */
+function unlock(){if(!hasTTS)return;try{var u=new window.SpeechSynthesisUtterance(" ");u.volume=0;window.speechSynthesis.speak(u);}catch(e){}}
+function openBox(){
+ unlock();$("boxsvg").classList.add("open");
+ setTimeout(function(){
+  $("hero").hidden=true;$("stage").hidden=false;$("stage").classList.add("show");
+  state.cur=-1;renderTray();renderDetail(-1,-1);setZoneClasses(-1);
+  playFrom(0);
+ },state.voiceOnly?50:850);
+}
+function closeBox(){
+ stopAll();state.cur=-1;$("stage").classList.remove("show");$("stage").hidden=true;$("hero").hidden=false;$("boxsvg").classList.remove("open");note("");$("bar").style.width="0";
+ renderStatic();
+}
+function rebuild(){
+ var wasOpen=!$("stage").hidden;stopAll();buildSteps();renderStatic();
+ if(wasOpen){renderTray();renderDetail(-1,-1);setZoneClasses(-1);state.cur=-1;$("bar").style.width="0";caption(state.lang==="ko"?"버튼을 눌러 다시 들어보세요.":"Press play to listen again.",state.lang==="ko"?"Press play to listen again.":"버튼을 눌러 다시 들어보세요.");}
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",function(e){
+ var el=e.target;
+ var kit=el.closest&&el.closest("[data-kit]");if(kit){state.kit=kit.getAttribute("data-kit");Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(b){b.classList.toggle("on",b===kit)});rebuild();return;}
+ var lg=el.closest&&el.closest("[data-lang]");if(lg){state.lang=lg.getAttribute("data-lang");Array.prototype.forEach.call(document.querySelectorAll("[data-lang]"),function(b){b.classList.toggle("on",b===lg)});rebuild();return;}
+ var z=el.closest&&el.closest(".zone");if(z){var zi=+z.getAttribute("data-z");state.zone=zi;renderDetail(zi,-1);setZoneClasses(zi);var s0=state.steps[firstStepOfZone(zi)];caption(s0.ko,s0.en);speakOne(state.lang==="ko"?s0.ko:s0.en,state.lang);return;}
+ var r=el.closest&&el.closest(".row");if(r){var ii=+r.getAttribute("data-it"),key=KITS[state.kit].zones[state.zone].items[ii],it=ITEMS[key];renderDetail(state.zone,ii);caption(it.tKo,it.tEn);speakOne(state.lang==="ko"?it.tKo:it.tEn,state.lang);return;}
+});
+document.addEventListener("keydown",function(e){if((e.key==="Enter"||e.key===" ")&&e.target&&(e.target.classList.contains("zone")||e.target.classList.contains("row"))){e.preventDefault();e.target.click();}});
+$("playBtn").addEventListener("click",openBox);
+$("voiceOnlyBtn").addEventListener("click",function(){state.voiceOnly=!state.voiceOnly;document.body.classList.toggle("voiceonly",state.voiceOnly);renderStatic();});
+$("closeBtn").addEventListener("click",closeBox);
+$("toggleBtn").addEventListener("click",function(){unlock();if(state.playing){stopAll();return;}var from=(state.cur>=state.steps.length-1||state.cur<0)?0:state.cur;playFrom(from);});
+$("prevBtn").addEventListener("click",function(){jumpZone(-1);});
+$("nextBtn").addEventListener("click",function(){jumpZone(1);});
+window.addEventListener("pagehide",stopAll);
+
+/* ---------- init ---------- */
+if(hasTTS){loadVoices();if("onvoiceschanged" in window.speechSynthesis){window.speechSynthesis.onvoiceschanged=loadVoices;}}
+var tokens=(location.hash||"").toLowerCase().replace("#","").split(/[^a-z]+/);
+if(tokens.indexOf("solo")>-1){state.kit="solo";}
+if(tokens.indexOf("en")>-1){state.lang="en";}
+Array.prototype.forEach.call(document.querySelectorAll("[data-kit]"),function(b){b.classList.toggle("on",b.getAttribute("data-kit")===state.kit)});
+Array.prototype.forEach.call(document.querySelectorAll("[data-lang]"),function(b){b.classList.toggle("on",b.getAttribute("data-lang")===state.lang)});
+buildSteps();renderStatic();
+window.__songil={state:state,buildSteps:buildSteps,playFrom:playFrom,openBox:openBox};
+})();
+</script>
+</body>
+</html>
